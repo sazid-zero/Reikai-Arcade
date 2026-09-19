@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${orbitron.variable} dark scroll-smooth`}>
-      <body className="bg-[#05050a] text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-violet-600 selection:text-white">
+    <html lang="en" className={`${inter.variable} ${orbitron.variable} dark scroll-smooth`} suppressHydrationWarning>
+      <body suppressHydrationWarning className="bg-[#05050a] text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-violet-600 selection:text-white">
         <CartProvider>
           {children}
         </CartProvider>
