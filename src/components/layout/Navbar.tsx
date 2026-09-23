@@ -40,14 +40,12 @@ export function Navbar({ onOpenSearch, onOpenWishlist, onOpenAuth }: NavbarProps
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 py-4 sm:py-5 transition-all duration-300 pointer-events-none">
-      {/* Floating Pill Nav Inspired by Screenshot 1 */}
+    <header className={`fixed top-0 left-0 right-0 z-50 flex justify-center px-4 py-4 sm:py-5 transition-all duration-300 pointer-events-none ${
+      scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+    }`}>
+      {/* Floating Pill Nav for site navigation when scrolled */}
       <nav 
-        className={`pointer-events-auto flex items-center justify-between gap-2 sm:gap-6 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full border transition-all duration-300 shadow-2xl backdrop-blur-xl ${
-          scrolled 
-            ? 'bg-[#090915]/90 border-violet-500/30 shadow-violet-950/40 w-full max-w-5xl' 
-            : 'bg-white/[0.08] border-white/20 hover:border-white/30 shadow-black/50 w-full max-w-5xl'
-        }`}
+        className="pointer-events-auto flex items-center justify-between gap-2 sm:gap-6 px-4 sm:px-7 py-2.5 sm:py-3 rounded-full border transition-all duration-300 shadow-2xl backdrop-blur-xl bg-[#090915]/95 border-violet-500/30 shadow-violet-950/40 w-full max-w-5xl"
       >
         {/* Left Links */}
         <div className="hidden md:flex items-center gap-6 text-xs font-semibold uppercase tracking-widest text-slate-300">
