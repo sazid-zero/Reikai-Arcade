@@ -94,6 +94,7 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
     //         grips (-Z in rest) → -Y (pointing DOWN in image) ✓
     //         D-pad (mirrored by root matrix) → left side ✓
     pivotGroup.rotation.order = 'YXZ';
+    // Keep the controller completely flat and front-facing.
     const baseRotationX = -Math.PI / 2;
     const baseRotationY = Math.PI;
     const baseRotationZ = 0;
@@ -152,30 +153,6 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
       }
     );
 
-    // Interactive Hover Tilt: Only right and left tilt with hover, always facing full front
-    let targetTiltY = 0;
-    let targetTiltZ = 0;
-    let targetTiltX = 0;
-
-    const handleWindowMouseMove = (e: MouseEvent) => {
-      const normX = (e.clientX / window.innerWidth) - 0.5;
-      const normY = (e.clientY / window.innerHeight) - 0.5;
-
-      // Left-right tilt (yaw and roll bank)
-      targetTiltY = normX * 0.28;
-      targetTiltZ = -normX * 0.10;
-      targetTiltX = -normY * 0.10;
-    };
-
-    const handleWindowMouseLeave = () => {
-      targetTiltY = 0;
-      targetTiltZ = 0;
-      targetTiltX = 0;
-    };
-
-    window.addEventListener('mousemove', handleWindowMouseMove);
-    document.addEventListener('mouseleave', handleWindowMouseLeave);
-
     // Resize handler
     const handleResize = () => {
       if (!container || !rendererRef.current) return;
@@ -197,16 +174,16 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
       const elapsed = clock.getElapsedTime();
 
       if (pivotGroup) {
-        const currentBaseX = baseRotationX + targetTiltX;
-        const currentBaseY = baseRotationY + targetTiltY;
-        const currentBaseZ = baseRotationZ + targetTiltZ;
+        const currentBaseX = baseRotationX;
+        const currentBaseY = baseRotationY;
+        const currentBaseZ = baseRotationZ;
 
         pivotGroup.rotation.x += (currentBaseX - pivotGroup.rotation.x) * 0.08;
         pivotGroup.rotation.y += (currentBaseY - pivotGroup.rotation.y) * 0.08;
         pivotGroup.rotation.z += (currentBaseZ - pivotGroup.rotation.z) * 0.08;
 
-        // Subtle gentle idle floating wave
-        pivotGroup.position.y = Math.sin(elapsed * 1.5) * 0.03;
+        // Subtle gentle idle floating wave, kept low so the model overlaps the title.
+        pivotGroup.position.y = -0.20 + Math.sin(elapsed * 1.5) * 0.03;
         pivotGroup.position.x = Math.cos(elapsed * 1.1) * 0.012;
       }
 
@@ -217,8 +194,7 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', handleWindowMouseMove);
-      document.removeEventListener('mouseleave', handleWindowMouseLeave);
+
       window.removeEventListener('resize', handleResize);
 
       if (container.contains(renderer.domElement)) {
