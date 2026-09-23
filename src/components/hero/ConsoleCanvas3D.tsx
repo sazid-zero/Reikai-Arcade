@@ -94,10 +94,11 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
     //         grips (-Z in rest) → -Y (pointing DOWN in image) ✓
     //         D-pad (mirrored by root matrix) → left side ✓
     pivotGroup.rotation.order = 'YXZ';
-    // Keep the controller face-on, with only a subtle five-degree left roll.
+    // Keep the face visually level, but yaw the controller so its left side leads
+    // and the right side recedes, matching the angled reference perspective.
     const baseRotationX = -Math.PI / 2 - 0.08;
-    const baseRotationY = Math.PI + 0.10;
-    const baseRotationZ = -0.09;
+    const baseRotationY = Math.PI + 0.28;
+    const baseRotationZ = -0.02;
 
     pivotGroup.rotation.x = baseRotationX;
     pivotGroup.rotation.y = baseRotationY;
