@@ -94,11 +94,11 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
     //         grips (-Z in rest) → -Y (pointing DOWN in image) ✓
     //         D-pad (mirrored by root matrix) → left side ✓
     pivotGroup.rotation.order = 'YXZ';
-    // Lower the controller into the headline and bank it slightly so the upper-right
-    // shoulder sits forward of the title, creating the reference's layered depth.
+    // Lower the controller into the headline and roll it left-to-right like the reference,
+    // keeping the right shoulder slightly lower for a more dimensional silhouette.
     const baseRotationX = -Math.PI / 2 - 0.08;
     const baseRotationY = Math.PI + 0.10;
-    const baseRotationZ = -0.12;
+    const baseRotationZ = -0.24;
 
     pivotGroup.rotation.x = baseRotationX;
     pivotGroup.rotation.y = baseRotationY;
