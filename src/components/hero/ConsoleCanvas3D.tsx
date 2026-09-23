@@ -94,9 +94,11 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
     //         grips (-Z in rest) → -Y (pointing DOWN in image) ✓
     //         D-pad (mirrored by root matrix) → left side ✓
     pivotGroup.rotation.order = 'YXZ';
-    const baseRotationX = -Math.PI / 2;
-    const baseRotationY = Math.PI;
-    const baseRotationZ = 0;
+    // Lower the controller into the headline and bank it slightly so the upper-right
+    // shoulder sits forward of the title, creating the reference's layered depth.
+    const baseRotationX = -Math.PI / 2 - 0.08;
+    const baseRotationY = Math.PI + 0.10;
+    const baseRotationZ = -0.12;
 
     pivotGroup.rotation.x = baseRotationX;
     pivotGroup.rotation.y = baseRotationY;
@@ -205,8 +207,8 @@ export function ConsoleCanvas3D({ onExploreClick, className = '' }: ConsoleCanva
         pivotGroup.rotation.y += (currentBaseY - pivotGroup.rotation.y) * 0.08;
         pivotGroup.rotation.z += (currentBaseZ - pivotGroup.rotation.z) * 0.08;
 
-        // Subtle gentle idle floating wave
-        pivotGroup.position.y = Math.sin(elapsed * 1.5) * 0.03;
+        // Subtle gentle idle floating wave, kept low so the model overlaps the title.
+        pivotGroup.position.y = -0.20 + Math.sin(elapsed * 1.5) * 0.03;
         pivotGroup.position.x = Math.cos(elapsed * 1.1) * 0.012;
       }
 
